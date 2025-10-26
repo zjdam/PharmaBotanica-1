@@ -1,0 +1,200 @@
+📁 HOME-APOTHECARY-WEBSITE/
+│
+├── 📁 app/                          # Next.js 14 App Router
+│   ├── (auth)/                      # Auth routes group
+│   │   ├── login/
+│   │   │   └── page.tsx
+│   │   ├── register/
+│   │   │   └── page.tsx
+│   │   └── layout.tsx
+│   │
+│   ├── (main)/                      # Main site routes
+│   │   ├── page.tsx                 # Homepage
+│   │   ├── categories/
+│   │   │   ├── page.tsx             # All categories
+│   │   │   └── [slug]/
+│   │   │       ├── page.tsx         # Single category (ailments list)
+│   │   │       └── [ailmentSlug]/
+│   │   │           ├── page.tsx     # Ailment page (recipes list)
+│   │   │           └── [recipeSlug]/
+│   │   │               └── page.tsx # Recipe detail page
+│   │   ├── browse/
+│   │   │   └── page.tsx             # Browse all recipes
+│   │   ├── about/
+│   │   │   └── page.tsx
+│   │   ├── pricing/
+│   │   │   └── page.tsx
+│   │   └── layout.tsx
+│   │
+│   ├── dashboard/                   # User dashboard
+│   │   ├── page.tsx                 # Dashboard home
+│   │   ├── favorites/
+│   │   │   └── page.tsx
+│   │   ├── profile/
+│   │   │   └── page.tsx
+│   │   ├── subscription/
+│   │   │   └── page.tsx
+│   │   └── layout.tsx
+│   │
+│   ├── admin/                       # Admin panel
+│   │   ├── page.tsx                 # Admin dashboard
+│   │   ├── categories/
+│   │   │   ├── page.tsx
+│   │   │   └── [id]/
+│   │   │       └── page.tsx
+│   │   ├── recipes/
+│   │   │   ├── page.tsx
+│   │   │   ├── new/
+│   │   │   │   └── page.tsx
+│   │   │   └── [id]/
+│   │   │       └── page.tsx
+│   │   ├── users/
+│   │   │   └── page.tsx
+│   │   ├── comments/
+│   │   │   └── page.tsx
+│   │   ├── analytics/
+│   │   │   └── page.tsx
+│   │   └── layout.tsx
+│   │
+│   ├── api/                         # API routes
+│   │   ├── auth/
+│   │   │   ├── [...nextauth]/
+│   │   │   │   └── route.ts
+│   │   │   ├── register/
+│   │   │   │   └── route.ts
+│   │   │   └── logout/
+│   │   │       └── route.ts
+│   │   ├── categories/
+│   │   │   ├── route.ts
+│   │   │   └── [id]/
+│   │   │       └── route.ts
+│   │   ├── recipes/
+│   │   │   ├── route.ts
+│   │   │   └── [id]/
+│   │   │       ├── route.ts
+│   │   │       ├── comments/
+│   │   │       │   └── route.ts
+│   │   │       └── ratings/
+│   │   │           └── route.ts
+│   │   ├── comments/
+│   │   │   ├── route.ts
+│   │   │   └── [id]/
+│   │   │       └── route.ts
+│   │   ├── subscription/
+│   │   │   ├── create/
+│   │   │   │   └── route.ts
+│   │   │   ├── cancel/
+│   │   │   │   └── route.ts
+│   │   │   └── webhook/
+│   │   │       └── route.ts
+│   │   ├── search/
+│   │   │   └── route.ts
+│   │   └── favorites/
+│   │       └── route.ts
+│   │
+│   ├── layout.tsx                   # Root layout
+│   ├── globals.css                  # Global styles
+│   └── error.tsx                    # Error boundary
+│
+├── 📁 components/                   # React components
+│   ├── layout/
+│   │   ├── Header.tsx
+│   │   ├── Footer.tsx
+│   │   ├── Sidebar.tsx
+│   │   └── Navigation.tsx
+│   │
+│   ├── recipe/
+│   │   ├── RecipeCard.tsx
+│   │   ├── RecipeList.tsx
+│   │   ├── RecipeDetail.tsx
+│   │   ├── RecipeVideo.tsx
+│   │   ├── RecipeIngredients.tsx
+│   │   ├── RecipeInstructions.tsx
+│   │   └── RecipeMeta.tsx
+│   │
+│   ├── category/
+│   │   ├── CategoryCard.tsx
+│   │   ├── CategoryGrid.tsx
+│   │   └── CategoryHero.tsx
+│   │
+│   ├── comment/
+│   │   ├── CommentForm.tsx
+│   │   ├── CommentList.tsx
+│   │   ├── Comment.tsx
+│   │   └── CommentThread.tsx
+│   │
+│   ├── subscription/
+│   │   ├── PricingCard.tsx
+│   │   ├── PricingTable.tsx
+│   │   ├── SubscriptionStatus.tsx
+│   │   └── PaymentForm.tsx
+│   │
+│   ├── ui/                          # Reusable UI components
+│   │   ├── Button.tsx
+│   │   ├── Input.tsx
+│   │   ├── Card.tsx
+│   │   ├── Badge.tsx
+│   │   ├── Modal.tsx
+│   │   ├── Dropdown.tsx
+│   │   ├── Tabs.tsx
+│   │   ├── Alert.tsx
+│   │   └── Spinner.tsx
+│   │
+│   └── auth/
+│       ├── LoginForm.tsx
+│       ├── RegisterForm.tsx
+│       └── ProtectedRoute.tsx
+│
+├── 📁 lib/                          # Utility libraries
+│   ├── db.ts                        # Database connection
+│   ├── prisma.ts                    # Prisma client
+│   ├── auth.ts                      # Auth configuration
+│   ├── stripe.ts                    # Stripe configuration
+│   ├── email.ts                     # Email service
+│   ├── validation.ts                # Input validation schemas
+│   └── utils.ts                     # Helper functions
+│
+├── 📁 hooks/                        # Custom React hooks
+│   ├── useAuth.ts
+│   ├── useSubscription.ts
+│   ├── useRecipes.ts
+│   ├── useComments.ts
+│   └── useDebounce.ts
+│
+├── 📁 types/                        # TypeScript types
+│   ├── index.ts
+│   ├── recipe.ts
+│   ├── user.ts
+│   ├── comment.ts
+│   └── subscription.ts
+│
+├── 📁 prisma/                       # Database schema
+│   ├── schema.prisma
+│   ├── migrations/
+│   └── seed.ts
+│
+├── 📁 public/                       # Static files
+│   ├── images/
+│   ├── icons/
+│   └── favicon.ico
+│
+├── 📁 styles/                       # Additional styles
+│   └── custom.css
+│
+├── 📁 config/                       # Configuration files
+│   ├── site.ts
+│   └── constants.ts
+│
+├── 📁 middleware/                   # Custom middleware
+│   └── auth.ts
+│
+├── .env.local                       # Environment variables
+├── .env.example                     # Example env file
+├── .gitignore
+├── next.config.js
+├── package.json
+├── tsconfig.json
+├── tailwind.config.js
+├── postcss.config.js
+└── README.md
+
