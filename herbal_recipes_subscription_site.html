@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Herbal Remedy Recipe Book</title>
+<meta name="description" content="Curated plant-based herbal remedies and heart-friendly recipes." />
+<style>
+:root {
+  --bg: #0b0e12;
+  --card: #12161d;
+  --muted: #94a3b8;
+  --text: #e2e8f0;
+  --accent: #10b981;
+  --accent-700: #059669;
+  --ring: rgba(16,185,129,0.35);
+}
+* { box-sizing: border-box; }
+body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial;
+        color: var(--text); background: radial-gradient(1200px 600px at 80% -200px, rgba(16,185,129,0.08), transparent 60%), var(--bg); }
+a { color: var(--accent); text-decoration: none; }
+.container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+header.sticky { position: sticky; top: 0; backdrop-filter: blur(6px); background: rgba(11,14,18,0.7); border-bottom:1px solid rgba(255,255,255,.1); z-index: 10; }
+header .brand { display:flex; align-items:center; gap:10px; }
+.brand .dot { width: 16px; height: 16px; border-radius: 6px; background: var(--accent); }
+.btn { padding: 10px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,.1); background:#0f171e; color:var(--text); cursor:pointer; }
+.btn.primary { background: var(--accent); color:#05261b; border-color: rgba(0,0,0,.2); font-weight: 700; }
+.btn.ghost { background: transparent; }
+.grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.card { background: var(--card); border:1px solid rgba(255,255,255,.06); border-radius:16px; overflow:hidden; display:flex; flex-direction:column; }
+.thumb { position: relative; height: 160px; background: #0a1217; display:grid; place-items:center; }
+.thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+.noimg { font-size: 13px; color: var(--muted); }
+.card-body { padding:14px; display:grid; gap:10px; }
+.card h3 { margin:0; font-size: 18px; }
+.meta { font-size:13px; color:var(--muted); display:flex; gap:10px; flex-wrap:wrap; }
+.tags { display:flex; gap:6px; flex-wrap:wrap; }
+.tag { font-size:11px; padding:4px 8px; border-radius:999px; background: rgba(16,185,129,0.1); color:#9ef5cf; border:1px solid rgba(16,185,129,0.2); }
+details summary { cursor:pointer; font-weight:600; }
+.video { border-radius:12px; overflow:hidden; border:1px dashed rgba(255,255,255,.08); background:#0b1217; display:grid; place-items:center; min-height:56px; }
+.video small { color: var(--muted); padding:12px; text-align:center; }
+section { margin: 28px 0; }
+footer { margin:40px 0 32px; text-align:center; color:var(--muted); font-size:13px; }
+.banner { position:relative; overflow:hidden; background: linear-gradient(135deg, var(--accent), var(--accent-700)); color:#032016; border-bottom:1px solid rgba(255,255,255,0.08); box-shadow: inset 0 -1px 0 rgba(0,0,0,0.15); }
+.banner .container { padding: 48px 24px; }
+.badge { display:inline-block; font-weight:600; letter-spacing:.04em; padding:6px 10px; border-radius:999px; background: rgba(0,0,0,0.1); color:#052e22; border:1px solid rgba(0,0,0,0.12); }
+.title { font-size: clamp(28px,5vw,44px); margin: 14px 0 8px; }
+.subtitle { font-size: clamp(15px,2.5vw,18px); opacity:.85; max-width: 56ch; }
+.paywall { border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:16px; background: rgba(255,255,255,0.05); text-align:center; }
+</style>
+</head>
+<body>
+  <header class="sticky">
+    <div class="container" style="display:flex; gap:12px; align-items:center;">
+      <div class="brand"><div class="dot"></div><strong>Herbal Remedy Recipe Book</strong></div>
+      <div style="margin-left:auto; display:flex; gap:8px;">
+        <a href="https://buy.stripe.com/test_XXXXXXXXXXXXXXXX" target="_blank" rel="noopener nofollow sponsored" class="btn primary">Subscribe</a>
+        <button id="demoUnlock" class="btn">Preview (demo)</button>
+        <button id="signOut" class="btn ghost" style="display:none;">Sign out</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="banner">
+    <div class="container">
+      <span class="badge">Herbal • Heart‑friendly • Holistic</span>
+      <h1 class="title">Herbal Remedy Recipe Book</h1>
+      <p class="subtitle">Curated plant‑based remedies and cardio‑friendly recipes. This page was prebuilt from your Excel and images.</p>
+    </div>
+  </div>
+
+  <main class="container">
+    <section>
+      <h2>Public Remedies</h2>
+      <div id="publicGrid" class="grid" aria-live="polite"></div>
+    </section>
+
+    <section>
+      <h2 style="display:flex; align-items:center; gap:8px;">Members‑only Remedies <small id="memberHint" style="color:var(--muted);"></small></h2>
+      <div id="paywall" class="paywall" style="display:none;">
+        <p>Become a member to unlock premium herbal remedies and step‑by‑step protocols.</p>
+        <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
+          <a href="https://buy.stripe.com/test_XXXXXXXXXXXXXXXX" target="_blank" rel="noopener nofollow sponsored" class="btn primary">Subscribe</a>
+          <button id="demoUnlock2" class="btn">Preview (demo)</button>
+        </div>
+      </div>
+      <div id="memberGrid" class="grid" aria-live="polite"></div>
+    </section>
+
+    <section>
+      <h2>Disclaimer</h2>
+      <p style="color:var(--muted);">The information on this site is for educational purposes only and does not substitute medical advice.</p>
+    </section>
+  </main>
+
+  <footer>
+    Generated 2025-10-29 12:07 UTC • Replace the Subscribe links with your Stripe Checkout URL.
+  </footer>
+
+  <script>
+    const PUBLIC_DATA = [{"title": "Cardiovascular Balance", "description": "A traditional preparation designed to help maintain cardiovascular balance and support healthy blood pressure. Cinnamon contains active compounds that may encourage vasodilation, support circulation, and provide antioxidant benefits to the vascular system.", "calories": "", "videoURL": "", "imageFile": "", "ingredients": "", "steps": "", "tags": [], "imageURL": ""}, {"title": "Cardiovascular Support", "description": "A traditional herbal infusion valued for its potential to support cardiovascular health and maintain normal blood pressure. Hibiscus petals are naturally rich in anthocyanins and organic acids, which contribute to heart and vascular wellness.", "calories": "", "videoURL": "", "imageFile": "", "ingredients": "", "steps": "", "tags": [], "imageURL": ""}, {"title": "Blood Vessel Care", "description": "A traditional herbal infusion formulated to support blood vessel integrity and promote healthy circulation. Butcher’s broom root has long been used in European herbal medicine to help relieve feelings of heaviness and swelling in the legs caused by venous insufficiency.", "calories": "", "videoURL": "", "imageFile": "", "ingredients": "", "steps": "", "tags": [], "imageURL": ""}, {"title": "Cardiovascular Protector", "description": "A traditional natural preparation used to help support cardiovascular and immune function. Garlic and lemon are both known for their circulatory and antioxidant properties, making this tonic a simple and effective way to promote heart health and vascular clarity.", "calories": "", "videoURL": "", "imageFile": "", "ingredients": "", "steps": "", "tags": [], "imageURL": ""}, {"title": "Circulatory Health", "description": "A nutrient-rich juice traditionally used to support cardiovascular endurance and vascular integrity. This blend combines beetroot and aronia berries, both valued for their circulation-enhancing and antioxidant properties.", "calories": "", "videoURL": "", "imageFile": "", "ingredients": "", "steps": "", "tags": [], "imageURL": ""}, {"title": "Circulation Support", "description": "A topical preparation traditionally used to promote circulation and ease muscular or joint stiffness. Turmeric and cayenne work synergistically to provide gentle heat and support local blood flow.", "calories": "", "videoURL": "", "imageFile": "", "ingredients": "", "steps": "", "tags": [], "imageURL": ""}, {"title": "Cardiovascular Immune Health", "description": "A traditional warming tonic designed to support cardiovascular and immune health. Garlic and ginger have been used to enhance circulation, reduce inflammation, and aid overall vitality.", "calories": "", "videoURL": "", "imageFile": "", "ingredients": "", "steps": "", "tags": [], "imageURL": ""}, {"title": "Heart Nourishment", "description": "A soothing herbal tea traditionally used to support heart and vascular health. Hawthorn and rosehips are both rich in antioxidants that promote healthy circulation and strengthen vessel walls.", "calories": "", "videoURL": "", "imageFile": "", "ingredients": "", "steps": "", "tags": [], "imageURL": ""}, {"title": "Heart Support", "description": "A traditional tincture prepared to support healthy capillaries, vision, and circulation. Bilberries are recognized for their high anthocyanin content, which contributes to vascular and ocular support.", "calories": "", "videoURL": "", "imageFile": "", "ingredients": "", "steps": "", "tags": [], "imageURL": ""}, {"title": "Cardiovascular Inflammation Reducer", "description": "A warming herbal combination formulated to promote circulation and reduce inflammation throughout the body. This blend harnesses the synergy of turmeric, ginger, and black pepper to support cardiovascular wellness.", "calories": "", "videoURL": "", "imageFile": "", "ingredients": "", "steps": "", "tags": [], "imageURL": ""}, {"title": "Cardiovascular Health", "description": "A traditional natural preparation designed to support immune defense and cardiovascular health. The slow fermentation process enhances garlic’s active compounds and adds probiotic qualities from raw honey.", "calories": "", "videoURL": "", "imageFile": "", "ingredients": "", "steps": "", "tags": [], "imageURL": ""}, {"title": "Varicose Veins Gel", "description": "A traditional external preparation used to support vein tone and reduce swelling associated with varicose veins or tired legs.", "calories": "", "videoURL": "", "imageFile": "", "ingredients": "", "steps": "", "tags": [], "imageURL": ""}, {"title": "Circulation Promoter", "description": "A warming tea blend designed to enhance blood flow, reduce sluggish circulation, and support cardiovascular performance.", "calories": "", "videoURL": "", "imageFile": "", "ingredients": "", "steps": "", "tags": [], "imageURL": ""}, {"title": "Varicose Vein Support", "description": "A herbal preparation formulated to strengthen veins and capillaries, helping to relieve discomfort associated with varicose veins and venous insufficiency.", "calories": "", "videoURL": "", "imageFile": "", "ingredients": "", "steps": "", "tags": [], "imageURL": ""}];
+    const MEMBER_DATA = [];
+
+    function makeEmbed(url) {
+      try {
+        const u = new URL(url);
+        const iframe = document.createElement('iframe');
+        iframe.width = '100%';
+        iframe.height = '200';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+        iframe.loading = 'lazy';
+        iframe.allowFullscreen = true;
+
+        if (u.hostname.includes('youtube.com') || u.hostname.includes('youtu.be')) {
+          let id = u.searchParams.get('v');
+          if (!id && u.hostname.includes('youtu.be')) id = u.pathname.slice(1);
+          if (id) { iframe.src = `https://www.youtube.com/embed/${id}`; return iframe; }
+        }
+        if (u.hostname.includes('vimeo.com')) {
+          const id = u.pathname.split('/').filter(Boolean).pop();
+          if (id) { iframe.src = `https://player.vimeo.com/video/${id}`; return iframe; }
+        }
+      } catch (e) { /* ignore */ }
+      return null;
+    }
+
+    function render(list, mount) {
+      mount.innerHTML = '';
+      list.forEach((r) => {
+        const card = document.createElement('article');
+        card.className = 'card';
+
+        const thumb = document.createElement('div');
+        thumb.className = 'thumb';
+        if (r.imageURL) {
+          const img = new Image();
+          img.loading = 'lazy';
+          img.src = r.imageURL;
+          img.alt = r.title || 'Recipe image';
+          thumb.appendChild(img);
+        } else {
+          const span = document.createElement('span');
+          span.className = 'noimg';
+          span.textContent = 'No image yet';
+          thumb.appendChild(span);
+        }
+
+        const body = document.createElement('div');
+        body.className = 'card-body';
+
+        const h3 = document.createElement('h3');
+        h3.textContent = r.title || 'Untitled';
+        body.appendChild(h3);
+
+        const meta = document.createElement('div');
+        meta.className = 'meta';
+        if (r.calories) meta.innerHTML += `🔥 ${r.calories} kcal`;
+        body.appendChild(meta);
+
+        if (r.description) {
+          const p = document.createElement('p');
+          p.textContent = r.description;
+          body.appendChild(p);
+        }
+
+        if (r.tags && r.tags.length) {
+          const tags = document.createElement('div');
+          tags.className = 'tags';
+          r.tags.forEach(t => {
+            const s = document.createElement('span');
+            s.className = 'tag';
+            s.textContent = t;
+            tags.appendChild(s);
+          });
+          body.appendChild(tags);
+        }
+
+        if (r.ingredients || r.steps) {
+          const det = document.createElement('details');
+          const sum = document.createElement('summary');
+          sum.textContent = 'Details';
+          det.appendChild(sum);
+          if (r.ingredients) {
+            const ing = document.createElement('p');
+            ing.innerHTML = `<strong>Ingredients:</strong> ${r.ingredients}`;
+            det.appendChild(ing);
+          }
+          if (r.steps) {
+            const st = document.createElement('p');
+            st.innerHTML = `<strong>Steps:</strong> ${r.steps}`;
+            det.appendChild(st);
+          }
+          body.appendChild(det);
+        }
+
+        const video = document.createElement('div');
+        video.className = 'video';
+        if (r.videoURL) {
+          const iframe = makeEmbed(r.videoURL);
+          if (iframe) video.appendChild(iframe);
+          else {
+            const small = document.createElement('small');
+            small.innerHTML = `Video: <a href="${r.videoURL}" target="_blank" rel="noopener">Open link</a>`;
+            video.appendChild(small);
+          }
+        } else {
+          const small = document.createElement('small');
+          small.textContent = 'Add a VideoURL to embed a clip here.';
+          video.appendChild(small);
+        }
+        body.appendChild(video);
+
+        card.appendChild(thumb);
+        card.appendChild(body);
+        mount.appendChild(card);
+      });
+    }
+
+    // Member gating via URL param or localStorage
+    const params = new URLSearchParams(location.search);
+    const subActive = ['1','true','active','yes'].includes((params.get('sub') || '').toLowerCase());
+    const saved = localStorage.getItem('herbal_isMember') === '1';
+    let isMember = subActive || saved;
+    if (subActive) localStorage.setItem('herbal_isMember', '1');
+
+    const publicGrid = document.getElementById('publicGrid');
+    const memberGrid = document.getElementById('memberGrid');
+    const paywall = document.getElementById('paywall');
+    const memberHint = document.getElementById('memberHint');
+    const signOut = document.getElementById('signOut');
+    const demoUnlock = document.getElementById('demoUnlock');
+    const demoUnlock2 = document.getElementById('demoUnlock2');
+
+    function updateUI() {
+      render(PUBLIC_DATA, publicGrid);
+      if (MEMBER_DATA.length) {
+        if (isMember) {
+          paywall.style.display = 'none';
+          memberGrid.style.display = '';
+          render(MEMBER_DATA, memberGrid);
+          memberHint.textContent = '(Unlocked)';
+          signOut.style.display = '';
+        } else {
+          memberGrid.innerHTML = '';
+          memberGrid.style.display = 'none';
+          paywall.style.display = '';
+          memberHint.textContent = '(Subscribe to unlock)';
+          signOut.style.display = 'none';
+        }
+      } else {
+        // If no member data, hide paywall section elements
+        paywall.style.display = 'none';
+        memberHint.textContent = '(No members-only items yet)';
+      }
+    }
+    updateUI();
+
+    demoUnlock?.addEventListener('click', () => { isMember = true; localStorage.setItem('herbal_isMember','1'); updateUI(); });
+    demoUnlock2?.addEventListener('click', () => { isMember = true; localStorage.setItem('herbal_isMember','1'); updateUI(); });
+    signOut?.addEventListener('click', () => { isMember = false; localStorage.removeItem('herbal_isMember'); updateUI(); });
+  </script>
+</body>
+</html>
